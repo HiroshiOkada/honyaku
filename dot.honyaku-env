@@ -1,0 +1,3 @@
+HONYAKU_API_KEY=sk-abracadabra
+HONYAKU_ENDPOINT=http://127.0.0.1:1234/v1
+HONYAKU_MODEL=qwen2.5-1.5b-instruct

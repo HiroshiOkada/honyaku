@@ -1,0 +1,76 @@
+# honyaku
+
+OpenAI 互換の LLM API を使った、シンプルな日英翻訳コマンドラインアプリです。
+
+## 必要なもの
+
+- Rust ツールチェイン
+- OpenAI 互換の LLM API エンドポイント（ローカルの LM Studio など）
+
+## セットアップ
+
+```bash
+git clone <repository>
+cd honyaku
+cargo build --release
+```
+
+環境変数は `dot.honyaku-env` をコピーして設定します。
+
+```bash
+cp dot.honyaku-env .env
+# .env を編集して実際の API キー・エンドポイント・モデル名を設定
+```
+
+## 使い方
+
+### 自動判定
+
+```bash
+export $(grep -v '^#' .env | xargs)
+honyaku "こんにちは"
+# => Hello
+```
+
+### 方向を指定
+
+```bash
+# 日本語 → 英語
+honyaku --je "こんにちは"
+
+# 英語 → 日本語
+honyaku --ej "Hello, world!"
+```
+
+### 標準入力
+
+```bash
+echo "Hello, world!" | honyaku
+# => こんにちは、世界!
+```
+
+### 特定の env ファイルを使う
+
+```bash
+honyaku --env ./production.env "Hello"
+```
+
+## 環境変数
+
+| 変数名 | 説明 | 例 |
+|---|---|---|
+| `HONYAKU_API_KEY` | API キー | `sk-abracadabra` |
+| `HONYAKU_ENDPOINT` | OpenAI 互換 API のベース URL | `http://127.0.0.1:1234/v1` |
+| `HONYAKU_MODEL` | 使用するモデル名 | `qwen2.5-1.5b-instruct` |
+
+## 自動判定のルール
+
+入力テキストの日本語文字割合で翻訳方向を決めます。
+
+- ひらがな・カタカナ・漢字が **70% 以上** → 日本語として **英語へ翻訳**
+- 日本語文字が **含まれていない** → 英語として **日本語へ翻訳**
+- それ以外（混在など）→ LLM に言語を尋ねてから翻訳方向を決定
+
+## ライセンス
+
+MIT
