@@ -15,19 +15,24 @@ cd honyaku
 cargo build --release
 ```
 
-環境変数は `dot.honyaku-env` をコピーして設定します。
+環境変数は `dot.honyaku-env` を参考に設定します。以下のいずれかの方法で読み込みます。
 
 ```bash
-cp dot.honyaku-env .env
-# .env を編集して実際の API キー・エンドポイント・モデル名を設定
+# シェル環境変数として読み込む
+export $(grep -v '^#' dot.honyaku-env | xargs)
+
+# または --env でファイルを明示的に指定する
+honyaku --env ./dot.honyaku-env "こんにちは"
 ```
+
+`honyaku` はカレントディレクトリの `.env` を自動では読みません。`$HOME/.env` と `--env <FILE>` のみを参照します。
 
 ## 使い方
 
 ### 自動判定
 
 ```bash
-export $(grep -v '^#' .env | xargs)
+export $(grep -v '^#' dot.honyaku-env | xargs)
 honyaku "こんにちは"
 # => Hello
 ```

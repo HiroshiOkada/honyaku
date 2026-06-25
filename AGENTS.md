@@ -10,7 +10,8 @@ Minimal Rust binary crate (`honyaku`). Translates between Japanese and English u
   - `HONYAKU_MODEL`
 - Load them with your preferred tool, e.g.:
   - `export $(grep -v '^#' dot.honyaku-env | xargs)`
-  - or copy to `.env` and use a loader like `dotenvx`.
+  - or pass a file explicitly with `--env ./my.env`.
+- The app does **not** auto-load a `.env` in the current working directory; it only checks `$HOME/.env` and `--env <FILE>`.
 - Env lookup precedence (highest to lowest):
   1. `--env <FILE>`
   2. Shell environment variables
