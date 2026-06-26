@@ -54,6 +54,10 @@ pub struct Args {
     #[arg(long, default_value = "auto", value_name = "ENCODING")]
     pub stdin_encoding: StdinEncoding,
 
+    /// Read repeated inputs from stdin, translating after two blank lines.
+    #[arg(long)]
+    pub repl: bool,
+
     /// Text to translate. If omitted, stdin is read.
     pub text: Vec<String>,
 }

@@ -61,6 +61,14 @@ honyaku --stdin-encoding utf-8 < input.txt
 honyaku --stdin-encoding cp932 < input.txt
 ```
 
+### REPL モード
+
+```bash
+honyaku --repl
+```
+
+`--repl` を指定すると標準入力を継続して読み、空行を二つ続けて入力した時点でそこまでの本文を翻訳します。翻訳後は次の入力待ちに戻ります。
+
 ### 特定の env ファイルを使う
 
 ```bash
