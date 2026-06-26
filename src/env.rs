@@ -56,7 +56,8 @@ fn load_into(path: &Path, target: &mut HashMap<String, String>) -> Result<()> {
         .with_context(|| format!("failed to read env file: {}", path.display()))?;
 
     for item in iter {
-        let (key, value) = item.with_context(|| format!("failed to parse env file: {}", path.display()))?;
+        let (key, value) =
+            item.with_context(|| format!("failed to parse env file: {}", path.display()))?;
         target.insert(key, value);
     }
 
@@ -101,9 +102,7 @@ mod tests {
             "HONYAKU_API_KEY=home-key\nHONYAKU_ENDPOINT=http://home/v1\nHONYAKU_MODEL=home-model\n",
         );
 
-        let (override_file, override_path) = temp_env_file(
-            "HONYAKU_API_KEY=override-key\n",
-        );
+        let (override_file, override_path) = temp_env_file("HONYAKU_API_KEY=override-key\n");
 
         // Since load() always looks at ${HOME}/.env, we can only test precedence by temporarily
         // swapping the mechanism. Instead, we verify load_into overrides existing keys.
@@ -121,7 +120,9 @@ mod tests {
 
     #[test]
     fn missing_required_key_errors() {
-        let (_file, path) = temp_env_file("HONYAKU_API_KEY=key\nHONYAKU_ENDPOINT=http://localhost/v1\n");
+        let (_file, path) = temp_env_file(
+            "HONYAKU_API_KEY=key\nHONYAKU_ENDPOINT=http://localhost/v1\nHONYAKU_MODEL=\n",
+        );
         let err = load(Some(Path::new(&path))).unwrap_err();
         assert!(err.to_string().contains("HONYAKU_MODEL is not set"));
     }

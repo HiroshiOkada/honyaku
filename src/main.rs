@@ -5,6 +5,7 @@ use clap::Parser;
 
 use honyaku::cli::Args;
 use honyaku::env;
+use honyaku::input::decode_stdin;
 use honyaku::translate::translate;
 
 fn main() -> Result<()> {
@@ -27,8 +28,8 @@ fn collect_input(args: &Args) -> Result<String> {
     if !args.text.is_empty() {
         Ok(args.text.join(" "))
     } else {
-        let mut buffer = String::new();
-        io::stdin().read_to_string(&mut buffer)?;
-        Ok(buffer)
+        let mut buffer = Vec::new();
+        io::stdin().read_to_end(&mut buffer)?;
+        decode_stdin(&buffer, args.stdin_encoding)
     }
 }

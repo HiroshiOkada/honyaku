@@ -18,7 +18,11 @@ const EN_TO_JA_SYSTEM_PROMPT: &str = r#"Translate the following English text int
 Output only the translation, with no explanations, notes, or markdown."#;
 
 /// Translate the input text, using an explicit direction or auto-detecting the source language.
-pub async fn translate(config: &Config, text: &str, direction: Option<Direction>) -> Result<String> {
+pub async fn translate(
+    config: &Config,
+    text: &str,
+    direction: Option<Direction>,
+) -> Result<String> {
     let direction = match direction {
         Some(d) => d,
         None => determine_direction(config, text).await?,

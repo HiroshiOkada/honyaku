@@ -54,6 +54,13 @@ echo "Hello, world!" | honyaku
 # => こんにちは、世界!
 ```
 
+標準入力の文字コードは既定で自動判定します。BOM 付き UTF-8/UTF-16、UTF-8 を優先し、Windows では CP932/Shift_JIS にもフォールバックします。
+
+```bash
+honyaku --stdin-encoding utf-8 < input.txt
+honyaku --stdin-encoding cp932 < input.txt
+```
+
 ### 特定の env ファイルを使う
 
 ```bash

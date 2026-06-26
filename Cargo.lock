@@ -432,6 +432,7 @@ dependencies = [
  "clap",
  "dirs",
  "dotenvy",
+ "encoding_rs",
  "reqwest",
  "serde",
  "serde_json",

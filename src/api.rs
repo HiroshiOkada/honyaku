@@ -30,11 +30,7 @@ struct Choice {
 pub async fn ask(config: &Config, system: &str, user: &str) -> Result<String> {
     let client = Client::new();
 
-    let url = config
-        .endpoint
-        .trim_end_matches('/')
-        .to_string()
-        + "/chat/completions";
+    let url = config.endpoint.trim_end_matches('/').to_string() + "/chat/completions";
 
     let request_body = ChatRequest {
         model: config.model.clone(),
